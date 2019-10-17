@@ -1,0 +1,95 @@
+
+Ajax
+	前后台的连接一种方式
+	步骤1：//实例化 Ajax
+		if(window3XMLHttpREquest){
+		   var xhr = new XMLHttpRequest();		
+		}else{
+		   var xhr = new ActiveXObject('Microsoft.XMLHTTP');		
+		}
+	步骤2：//连接后台  / 文件
+		xhr .open（“请求方式”，“请求路径”，“布尔值 异步或者同步”）
+ 		GET  请求：请求路径？键=值&键=值..
+		POST 请求：写请求头
+			   xhr.setRequestHeader("content-type","application/x-www-form-urlencoded"); 
+	步骤3： 传 参数   发送数据 
+		注：GET  请求 不写参数，POST 写。
+		GET  请求： xhr.send();       // 发送功能  
+		POST 请求： xhr.send(“id=”+ uid );
+		
+	步骤4：接受结果
+	       xhr.onreadystatechange = function(){
+			//监听 状态码
+			if( xhr.readyState==4 ){
+				if（xhr.status >=200 && xhr.status<=207 || xhr.status ==304 ）{
+					console.log(xhr.responsrText);  //接受数据
+				}			
+			}
+		}
+	
+	Ajax 的json:
+		JSON字符串   转 JSON对象   ： JSON.parse(json字符串)
+		JSON对象     转 JSON字符串 ： JSON.stringify(json对象)
+
+	//事件委托
+		$（"#box"）.on("click",".list",function(){ })
+
+	JQ 中的Ajax：
+		$.get （“地址”，数据，function(data){   //data 返回的数据   }）
+		$.post（“地址”，数据，function(data){   //data 返回的数据   }）
+		$.ajax（{ 配置项 }）
+		$.ajax（{ 
+		     url :"",
+		     type:"get",
+		     data:{ "e":5 ,"f":6 },
+		     dataType: "数据类型"    //script  html  xml  json  jsonp
+		     success:function(){
+			
+		     },
+		     beforeSend:function(){
+			// 在ajax 执行前要完成的功能
+		     },
+ 		     comolete:function(){
+			// 在ajax 状态码为 4 的时候 需要完成的功能
+		     },
+ 		     error:function(){
+			// 在ajax 请求失败时 执行
+		     },
+		}）
+
+	
+	解决ajax 跨域问题：
+		方法1：在php中 ：file_get_contents("跨域路径")；
+		       $res = file_get_contents("...");  echo $res;
+		方法2：jsonp,jsonp解决方案，使用其他标签代替，需要后台配合。
+		
+		方法3：<script src=" url"></script>  url:...callback=demo
+		       <script>
+				function date(data){
+					//data 数据..
+				}
+		       </script>
+
+			后台：$fn = isset($_GET["callback"])?$_GET["callback"]:"moren";
+
+			      echo "{$fn}({$data})";
+			
+			      echo "{$fn}("没有数据")";
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

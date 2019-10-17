@@ -1,0 +1,180 @@
+    worker 
+	H5新特性 
+	1.worker 线程 （启动另一个线程 去执行）
+	    用法：
+		1.首先实例化  
+                    var mywork = new Worker("路径")；
+                2.调用监听方法，监听返回结果
+                    mywork.onmessage = function(data){
+ 			//data  返回的结果对象 
+                        //data.data  真正的返回数据
+		    }
+                3.新js中发送数据时调用postMessage()方法
+		    postMessage(值)
+		例子：
+			var mywork = new Worker("路径")；
+
+			var k=0;
+		        setInterval(function(){
+				k++;
+				postMessage(k);
+			},2000);
+
+	2.文件操作：
+	      H5中Input 里 type = file ,这个可以上传文件。<input type="file" />
+	      上传多个图片， <input type="file"  multiple />
+	      
+	      可以通过js 获取上传文件的信息
+		 this.files  可以获取(文件名称，大小，类型，修改时间)
+	      
+	      读取上传的文件 使用 FileReader()   
+		  注意：读取成功/失败，方法不会返回结果，结果储存在result属性中。
+		  
+		  上传图片，预览图片
+		  1.判断你的浏览器支不支持FileReader 
+		        if（typeof FileReader=="undefined"）{  ...}
+		  2.通过js获取上下文信息
+		  	
+		  3.判断上传的是否是图片类型
+			file = file文本的id [0]
+			if(!/image\/\w+/.test(file.type)){ return false; // 不是 }  //是图片
+		  4.实例化 FileReader
+                        var reader = new FileReader(); 
+		  5.读取 
+			将文件以Date URL形式读取在页面  reader .readAsDataURL(file);
+			将文件以文本形式读取            reader .readAsText(file);  .... 
+			将文件以二进制形式读取          reader .readAsBinarystring(file);  .... 
+
+							reader .onload = function(e){  
+								 this.result //返回的结果   <img src= "+ this.result +" 
+							}
+ 
+			
+
+	3.调用用户设备：
+		调用摄像头，在移动端会给用户选择，是选择相册还是拍照。
+			    在PC端，直接调用摄像头
+		调用麦克风，在移动端，在PC端直接调用麦克风。
+		
+		1.使用时要做兼容  
+			navigator.getUserMedia = navigator.getUserMedia 
+						|| navigator.webkitGetUserMedia 
+						|| navigator.mozGetUserMedia ;
+		2.调用getUserMedia 方法；
+			navigator.getUserMedia（constraints,successCallback,errorCallback）;
+			参数：
+			constraints:要调用的设备类型，调用时传入对象
+				    {
+					video:true,  //调用摄像头
+					audio:true   //调用麦克风
+   	        		     }
+
+			successCallback：成功回调函数，调用成功时要执行的功能，有一个形参，（视频流），使用是需要转成地址。
+			例子：
+				function(stream){
+					var URL  = window.URL || window.webkitURL;
+					video.src = URL.createObjectURL(stream);
+					video.play();
+
+				}
+
+			errorCallback: 失败回调函数
+			例子：
+				function(error){
+					console.log(error.name || error);
+
+				}
+	4.websocket (取代 AJAX )
+		网址：http://www.php.cn/html5-tutorial-359474.html
+		客户端:
+			1.检测浏览器是否支持websocket
+				if( window.WebSocket == "undefined"  ){}
+			2.开始创建连接
+				vat conection = new WebSocket("ws://localhost:8080");     ws: 是wss协议，不是Http协议。
+			3.有一个readyState属性，有4个值，  0 正在连接  1 连接成功  2 正在关闭  3  连接关闭
+				conection.onopen = wsOpen;
+				触发open事件，可以向服务器发送信息，我们可以指定open事件的回调函数。
+				function wsOpen(event){
+					console.log(“conection”)；
+				}
+				关闭WebSocket会触发close事件
+				conection.onclose = wsClose;
+				function wsClose(event){
+					event.wasClean；  //bool值   连接关闭了
+					event.code；      //连接状态（数字）   服务器提供
+					event.reason；    //关闭原因   服务器提供
+ 				}
+				conection.close（）；
+			4.发送数据
+				conection.send(发送的数据)
+			5.接受返回的数据				  
+				conection.onmessage = wsMwssage;
+				function wsMwssage(event){
+					event.data； 
+ 				}
+			6.处理错误
+				conection.onerror = wsError;
+				function wsError(event){
+					event.data； 
+ 				}	
+
+		服务器端：
+			1.服务器部署websocket的代码， 以node.js 搭建服务器
+				var http = require('http');
+				var server = http.createServer(function(request,response){
+
+				});
+			2.监听8080端口
+				server.listen（8080，function(){
+
+				}）
+			3.启动websocket服务器，如果没有安装，可以使用命令安装。
+				var WebSocketServer = require("websocket").server;
+				var wsServer = new WebSocketServer({
+					httpserver:server
+				})
+			4.建立request事件的回调函数。
+				var connection;
+				wsServer.on('request',function(req){
+					connect = req.accept("echo-protocol",req.origin);
+				})
+			5.....
+
+	5.Mutation Observer 动态观察器
+		网站：http://www.php.cn/html5-tutorial-359470.html
+		用来监听DOM变动的，能监听DOM的增删改，还能监听属性变化。
+		能把多个动态改变放到一起执行。
+		1.兼容性
+			var MutationObserver = window.MutationObserver || window.WebkitMutationObserver || window.MozMutationObserver 
+			var mutationObserverSupport = !!  MutationObserver;
+		2.实例化
+			var observer = new MutationObserver(callback);
+		3.observe方法  监听方法
+			observer.observe（“监听元素的id”,{
+				"childList" : true ,            //子元素的改变
+				"attributes" : true ,	        //属性的改变
+				"characterDate": true ,	        //节点内容 或节点文本的变动
+				"subtree":true  	        //所有下属节点的变动
+				"attributeOldValue":true  	//需要记录变动之前的属性值
+				"characterDataOldValue":true    //需要记录变动之前的数据值
+				 "attributeFilter":true          //监听特定属性，例子['class','src',...] 数组形式			
+			}）
+		4.MutationRecord对象
+			.....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

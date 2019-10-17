@@ -1,0 +1,288 @@
+    数据库 ：
+ 数据库定义语言，数据控制语言，数据操纵语言，事务控制语言 
+ 
+ 基本数据库语法：
+	show databases; 显示当前全部数据库
+	create database 库名  创建数据库      create database 名子 charset='utf-8'
+	CREATE DATABASE IF NOT EXISTS my_db default charset utf8 COLLATE utf8_general_ci;
+	drop database   库名  删除数据库
+	use  库名       使用该数据库  切换数据库 
+	
+	source 路径名   导入数据库
+	
+	primary key 主键   not null 非空   auto_increment 自增  default "默认值"  字段名字  字段类型（长度）
+
+ 数据操纵语言 DML ：增删改查 
+   insert update delete select 
+ 
+ 注意：
+   1）Oracle 不区分大小写
+   2）SQL语句以 ; 结尾
+  
+ * 查看表结构 （字段信息）  desc 表名称
+   
+   带有列别名的查询语句：
+   select 字段1 as  '别名' from 表名;
+    
+   筛选查询：
+   select * from 表名 where 条件
+ 
+   比较运算符：>  <  =  >=  <=  !=   ( Oracle 自带不等于的语法 <> )
+   
+   并且 and  例子：select * from 表名 where 条件1 and 条件2
+   或者 or
+
+ * 区间查询
+   Between ... and  (两个值之间  包含边界) 
+             select * from 表名 where between 1 and 10
+   模糊查询
+   like 匹配表达式   %：若干个字符  _:代表一个字符
+             select * from ... where 字段 like  '%A%'    _A%
+   排序查询  order by 在select语句结尾  默认：升序排序 asc  desc 降序
+             select * from ... order by 字段，字段2 desc
+          
+   函数：单行函数/多行函数
+	 单行函数：字符、数值、日期、转换、通用
+
+   字符函数：
+       Lower("")   转换成小写格式
+       Upper(""）  转换成大写格式
+       Initcap("") 将字符串的首字母转换成大写，其他的变小写
+       Concat("字符串1","字符串2") 将字符串1和字符串2连接 获得新的字符串  +
+       Substr("字符串"，1,5)  截取字符串，1是开始的位置，5是结束的位置
+       Length("")  获取字符串的个数
+       Instr("abcws","w") 获取字符串中的字母的位置
+       补齐：
+       Lpad("字符串"，10，“*”)  左补齐，10是总共得位数，*是以 *进行补齐，*****240 
+       Rpad("字符串"，10，“*”)  右补齐
+
+   数字函数:
+       Round(“”，“”)  四舍五入
+       Trunc("45.926","2")  截断 得到：45.92
+       Mod("1600","300") 求余   
+
+   通用函数：
+       Nvl(A,B)  A是否为空，如果为空，值是B。不为空，值是A. 
+            select xxx ,nvl(n,0) ,... from 表
+
+       Nvl2(A,B,C) A是否为空，如果为空，值是C。不为空，值是B.
+	    select xxx ,nvl(n,0,1) ,... from 表   
+       
+       Nullif(a,b) 相等返回null,不等于返回a
+
+       Coalesce(a,b,c,d,200) 可以同时处理交替多个值，如果第一个表达式为空，返回下一个表达式，最后都为空，返回200
+
+
+       case 表达式  case 要匹配的值 when 条件1 then 执行1 
+				    when 条件2 then 执行2  else  执行n   
+                    end
+          例子：
+		select  字段, 
+		case 字段 when 10 then 字段1*1
+			  when 20 then 字段1*2
+                          when 30 then 字段1*3 
+                          else  字段1
+                end   from  表
+       
+       decode（）函数  例子：
+                      decode( 字段或者表达式 ，条件1，值1
+					     ，条件2，值2
+ 					     ，条件3，值3
+					)  from  表
+	
+   多表查询：
+       主键：唯一的字段，非空、唯一       ：
+       外键：可以在一张表当中 通过一个外键定位另一张表的主键
+       例子：select * from 表1，表2  where 表1.id = 表2.id
+
+       非等值查询：
+	 select * from 表1，表2  where 表1.sal between 表2.最低值 and 表2.最高值
+   
+       *内连接 ：在进行多表查询的过程中，多张表当中不满足条件都不显示
+       *外连接 ：在进行多表查询的时候，左边（右边）的表不满足条件的也显示出来  （+） join   .. on ..
+           左外连接： left   例子：select ... where 表1.字段      = 表2.字段 （+） 或者 select  a.*,b.*  from a  left  join  b   on  a.id=b.parent_id   
+	   右外连接： right  例子：select ... where 表1.字段（+） = 表2.字段       或者 select  a.*,b.*  from a  right join  b   on  a.id=b.parent_id  
+           全外连接： full   例子：select   a.*,b.*   from   a   full   join   b     on   a.id=b.parent_id   
+    
+        外连接：不予许出现where 子句， select 查询内容 from 表1 left/right/outer  join 表2   on 条件
+
+        自连接 ：在一张表中，某些字段有一定关联，自己需要连接自己
+           例子：select 别名.字段.... from 表1 a ,表2 b where a.id= b.id2
+
+
+        自然链接：（natural join）会以两个表中具有相同名字的列为条件创建等值链接
+            例子：select 别名.字段.... from 表1 a natural join 表2 b
+            表1 和 表2 两张表里有相同的字段，然后以那个字段进行表的关联。
+
+
+    分组函数/聚合函数  ：对一组数据返回一个值
+        Avg :  平均值
+        Count: 计数      Count(*)  注意：忽略空的，不计空的字段
+        Max:   最大值    可以处理日期 和 字符串
+        Min:   最小值
+        Sun:   和 
+        例子： select count(id) from 表 where sal between 200 and  1000;
+
+	having  相当于 where ,在 group by 里使用
+	    例子：select "column_name1", sum("column_name2") FROM "table_name" 
+                  GROUP BY "column_name1" 
+                  HAVING (条件) 
+
+       
+    DML语句：数据操作语言
+         增：（插入）insert 
+         insert into 表名 列明 values(值)  insert into 表名 （id,sal,name）values (1,20,yan) 
+         注意：插入的字段是字符串，要求必须使用‘’， null 和 ‘’ 有区别的
+         
+         修改 （更新）update
+         update 表名 set 字段名=修改值 ,字段名=修改值  
+	 没有条件，修改多行，一般我们在后面加条件  where ....  
+		
+	 删除 
+	 delete from 表
+	 没有条件，删除多行，一般我们在后面加条件  where ....
+         注意：我们删除表中，这个字段在其他表中找到子记录，就不能删除成功，违反了完整约束条件。
+         
+    补：Oracle sysdate 日期格式，当前得系统日期   mysql: datetime 日期格式  now() 当前得系统日期
+        to_char(日期,”转换格式” ) 即把给定  日期格式  转成 字符串
+        to_date(‘1982-5-5’，‘YYYY-MM-DD) 日期的转换格式，字符串转成 日期格式
+        主键，唯一性，系统自动生成，可以通过一个子查询，子查询查询的最大的编号+1
+		多种日期格式： 
+                  YYYY：四位表示的年份 
+                  YYY，YY，Y：年份的最后三位、两位或一位，缺省为当前世纪 
+                  MM：01~12的月份编号 
+                  MONTH：九个字符表示的月份，右边用空格填补 
+                  MON：三位字符的月份缩写 
+                  WW：一年中的星期 
+                  D：星期中的第几天 
+                  DD：月份中的第几天 
+                  DDD：年所中的第几天 
+                  DAY：九个字符表示的天的全称，右边用空格补齐 
+                  HH，HH12：一天中的第几个小时，12进制表示法 
+                  HH24：一天中的第几个小时，取值为00~23 
+                  MI：一小时中的分钟 
+                  SS：一分钟中的秒 
+                  SSSS：从午夜开始过去的秒数 
+
+
+     事务：一组逻辑操作单元，使数据从一种状态转变到另一种状态。
+          
+	TCL 事物控制语言
+	    Commit 提交：事务没有出现错误，将之前所有的操作永久性保存在数据库，在没有提交，数据库操作并不是真正意义的操作。
+
+	    		 事务提交：1.Commit手动提交  2. DDL语句，自动提交  3.正常关闭，自动提交  4.异常终止 。
+	    Rollback:一个事务在处理的过程，如果其中一个逻辑单元出现了问题，取消之前的所有操作。
+
+
+     数据定义语言：DDL
+         创建表：create table 表名（
+		       列名  数据类型（长度），
+		       列名  数据类型（长度），
+		       列名  数据类型（长度）
+		 ）
+	    例子：create table 表名（
+		       id    number(100),
+		       name  varchar2（10),
+		       tel   varchar2（13)
+		  ）
+            注意：回滚，对DDL语句无效
+            
+	    数据类型：
+	 	varchar2(size)  可变长字符数据
+		char(size)      定长字符数据
+		number(p，s)    可变长数值数据  p是个数，s是小数点后几位个数
+		long	可变长数值数据  大 最大可达到2
+		date    日期数据
+		clob    字符数据 最大可达到4
+
+	   默认值: default 默认值 
+
+	   
+	  通过子查询创建表：
+		create table 表 as 子查询
+		通过子查询创建表的时候，新建的表的字段名称制定  别名
+		create table 表 as select id as '编号'，name as '名字' from 表....
+	       *创建一张表，和另一张表对应，复制结果，不复制数据  在where 条件加 假的条件
+           	create table 表 as select * from 表 where 1=2
+		
+	  修改表结构 : 修改DDL
+		1.增加列：           alter table 表名 add (字段1 number（10），字段2 varcher2（20），)
+		2.修改表名字：改表名 alter table 原表名 rename to 新表名
+		3.修改列名字：       alter table 表名  rename column 原始列名 to 新名字
+		4.修改列类型以及尺寸： alter table 表名 modify (字段1 number（10）)
+		5.删除某一个列       alter table 表名 drop column 列名
+
+
+	删除表 以及表结构：drop table 表名
+	清空表：
+		delete from 表
+		 
+		两者的区别  delete 可以回滚，truncate 不可以回滚
+
+	重名名表：rename to
+
+
+	orache : 
+
+	打开Oracle监听：lsnrctl start          关闭监听：   lsnrctl stop 监听关闭那么客户端无法连接
+	进入sqlplus：sqlplus /nolog 
+	使用sysdab角色登录sqlplus：   conn /as sysdba;
+	启动数据库：startup;          关闭数据库：shutdown immediate;（只能sysdba进行关闭，应该是角色问题）    
+ 
+	连接eipdtp用户： conn eipdtp/eipdtp;   
+	
+	查看用户列表
+	select username from dba_users
+	改用户的密码
+	alter user 用户名 identified by 密码;
+ 	输入用户名、密码 
+	查看当前用户的所有表
+	select table_name from user_tables;
+  
+	查看表内容： select * from user_tables;
+	查看有哪些实例： select instance_name from v$instance; 
+	查看对应的用户： select username from dba_users;
+	创建用户： create user ts identified by ts;
+ 
+	获取表：
+	select table_name from user_tables; //当前用户的表      
+ 
+	select table_name from all_tables;    //所有用户的表   
+ 
+	select table_name from dba_tables; //包括系统表
+ 
+	select table_name from dba_tables wher e owner='用户名'
+   
+	获取表字段：
+	select * from user_tab_columns where Table_Name='用户表' order by column_name;
+ 
+	获取表注释：
+	select * from user_tab_comments where Table_Name='用户表'order by Table_Name;
+ 
+	查看   $ORACLE_BASE和$ORACLE_HOME
+	进入用户主目录：cd
+	执行   vi .bash_profile   查看
+	
+
+	改oracle数据库用户密码
+	alter user 数据库连接用户名 identified by 新密码;
+	（注：1.分号不能忘；2.密码若为数字和字母组合，且数字开头，密码要用双引号）
+	
+
+	关掉所有外键约束
+	SELECT 'alter table  '|| t.table_name || ' disable constraint ' || t.CONSTRAINT_NAME || ';'
+	FROM USER_CONSTRAINTS t WHERE t.CONSTRAINT_TYPE = 'R';
+
+	使用impdp导入数据   实例名 ORCL
+	imp 用户名/密码 @实例名  file = 文件路径 ignore=y full = y
+
+	导出
+	exp  用户名/密码@实例名  file = 文件路径 。dmp 文件
+
+	查看表空间 select * from dba_data_files;
+	
+
+
+
+
+   	

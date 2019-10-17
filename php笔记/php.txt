@@ -1,0 +1,132 @@
+ php
+	php文件起始标识<?php   ?> 结束标识。
+	基本语法：
+		变量：命名规范 以 $ 开头... （定义时必须赋值）。     $num = 1    echo $num 
+		定义常量: define("键名"，“值”)
+		输出语句：echo    ：输出 
+			  print_r : 输出对象类型 （数组，对象）
+			  var_dump: 输入所有的类型，还显示数据类型和数据长度。
+		
+		数据类型：整型，浮点，字符串，布尔，对象.
+		运算符：  和js一样，  + 在php中只代表 加法 ，  两个字符串连接 使用“ . ”
+		选择结构：if / switch  和 js  一样
+		循环    ：for/ while / do while / 和 js  一样  break/ coutinue  一样。
+		
+		函数：定义函数 Function 函数名（形参）{  }    $fn = function(){ }
+		      调用     函数名（实参）    
+		      注意：   形参 和 实参 个数必须一样。
+
+		字符串：
+		      单引号： 解析当普通字符串处理
+		      双引号： 先检查是否有变量，如果有变量，会解析，然后在当字符串处理。 { $变量名 }
+		      求字符串长度：strlen( 变量 )
+		      字符串连接符：" . "  例子 $str=‘ ipone ’.$nun .'价格 ' ；
+
+		数组：定义数组 不能使用[] 方式定义，使用 array()
+	      		       例子： $ arr=array(1,2,3,4)							     echo  $ arr[0]
+		      关联数组：      $ arr=array("键名1"=>“值1”，"键名2"=>“值2”，"键名3"=>“值3”)              echo  $ arr[键名1]
+		      混合数组：      $ arr=array(1,2,"键名1"=>“值1”，4，5，"键名2"=>“值2”，"键名3"=>“值3” )
+		      遍历： count() 计算 长度。
+			 方法1：  for($i=0;$i<count($arr);$i++){  echo $arr[ $i ]  }
+			 方法2：  Foreach( 数组  as  $ key => $ value ){    } 
+				  $ key  是键名  $ value  是值
+
+		对象：对象都是由类实例化生成
+		    类：定义对象的特征和功能。  权限：public  全局   protected  类本身和继承者用   private  只能类本身用
+			定义类：class  类名{  
+				   public  $名字1=值1；  	
+				   public  $名字2=值2； 
+				   public  $名字3=值3；  
+				}  
+		        实例化：$obj = new 类名() ;   var_dump($obj)    echo  $obj->名字1  (调用)  
+				$this-> 属性/方法（）；
+		    继承：extends  一个类只能继承一个父亲。
+			  class  子类名  extends  父类名{   }
+			  子类 调用 父类 的构造函数 ：parent::父类的方法名( );
+				例子：  class  子类名  extends  父类名{ 
+						public $school='';
+						parent::_construct( );
+						...
+					}
+		时间：
+			time() 获取从1970.1.1开始到现在的秒的时间戳，以秒为单位。
+			设置时区： date_default_timezone_set("Asiz/Shanghai");
+			能看懂的时间  date("时间格式"，时间戳)
+			时间格式：
+				Y 4位年份     y 2位年份
+			 	m 月份
+				d 日
+				H 24小时制    h 12小时制
+				i 分钟
+				s 秒
+		超全局变量
+			全局变量只能在全局范围内访问，不能在局部访问，如果要访问加global
+			$_GET  $_POST  :  请求提交的数据     例子：$_GET[ '键名 ']
+			$_COOKIE       :  获取cookie值	
+					  设置cookie   setcookie("键名" ，“值”，“有效期”，“路径”)
+					  获取cookie   $_COOKIE["键名"]
+					  删除cookie   把cookie 的有效期设置成 负数
+						
+						isset() 判断一个变量是否定义过
+						exit() 退出  相当于 return
+			$_FILES        :  获取上传文件信息
+			$_GLOBAL       :  定义全局变量
+			
+   		PHP连接数据库：
+			//连接数据库
+			$ con = mysqli_connect("127.0.0.1","root","root","表名"，"3306")			  
+			//设置编码
+			mysql_query($con,'set names utf8 ');
+			//数据库的操作 （增删改查）
+			mysql_query($con,'  sql 语句 ');
+			
+			增删改  的返回值 是 布尔值；
+			查询结果集：一次性全部解析  fetch_all();  返回索引数组  fetch_all(MYSQLI_ASSOC);  返回关联数组   
+				    每次解析一条    fetch_row();  返回索引数组  fetch_assoc()	          返回关联数组
+				    例子：  $对象  = $对象->fetch_all(MYSQLI_ASSOC);
+
+ 		PDO: 统一一大部分的数据库操作
+			//数据库连接
+			$pdo = new PDO('mysql:host127.0.0.1;dbname=数据库名;charset=utf8;port=3306','root','密码')；
+			//设置编码
+			$pdo->query($con,'set names utf8 ');
+			//数据库的操作 （增删改查）
+			$pdo ->query()   每次执行1条sql,返回值是正常的返回值。
+			$pdo ->exec()    返回值是数据库发生改变的数据  条数
+			$pdo ->prepare() 预处理函数,sql可以不完整，可以使用？ 或 ：关键字 形式占位符，后面需要调用execute()传入值。    防止sql 注入。
+				例子：   $res = $pdo ->prepare(‘insert into user (name.pwd)’value (?,? ) );
+	 				 传值： $res->execute(array('参数1'，'参数2'))；
+					        或者	
+						$res->bindValue(1,"参数1");  $res->bindValue(2,"参数2");
+						$res->execute();
+					 还可以：	
+					 $res = $pdo ->prepare(‘insert into user (name.pwd)’value (:name,:pwd ) );
+					 $res->execute(array(':name '=> '参数1'，':pwd '=> '参数2'))；					
+					 $res->lastInsertId();  获取最后一项id
+				结果集： 
+					 一次性全部解析: 对象->fetchAll();                  混合数组
+							 对象->fetchAll(PDO:FETCH_ASSOC);   关联数组
+					 每次解析一条    对象->fetch();			    混合数组
+					                 对象->fetch(PDO:FETCH_ASSOC);      关联数组
+				事务：
+					开启事务：$pdo = new PDO('mysql:host127.0.0.1;dbname=数据库名;charset=utf8;port=3306','root','密码')；
+						  $pdo->beginTransaction();	
+					提交事务：$pdo->commit();
+					回滚事务：$pdo->rollback()
+					          例子：try{
+							   $res = $pdo ->prepare(‘insert into user (name.pwd)’value (?,? ) );
+							   ....
+							   $pdo->commit();
+							}catch(PDOExeption $e){
+							   $pdo->rollback()
+							}
+		传输
+		 	json_encode(对象);  以JSON的形式 返回
+
+			in (3,6,7)  多点查询   limit '起始位置'，‘长度’ limit 0,2
+
+
+
+
+
+

@@ -1,0 +1,487 @@
+ Linux 入门
+	终端：设备终端
+	      物理终端（/dev/console）
+	      虚拟终端 Ctrl+Alt+F[1-6]
+	      图形终端 （/dev/tty7）
+	      伪终端（/dev/pts/#） pty,SSH远程链接
+	      当前终端设备 #tty
+
+	Xshell软件远程 管理 Linux 系统  序列号:150105-116578-999990
+
+	命令：
+	基础命令：
+		# 管理员 $ 普通用户
+		关闭图形界面:        init 3  开启图形界面  init 5	
+		查看IP地址           ifconfig
+		查看CPU              lscpu 
+		列出目录下的文件     ls
+		列出目录下的隐藏文件 ls -a
+		显示文件的详细属性   ls -l
+		内存  		     free 
+		让文件生效 执行 . 文件
+		退出       exit
+	shell : Shell是系统的用户界面，提供了用户与内核进行交互操作的一种接口。（中文名 命令行）
+	显示整个文件 cat
+	显示当前系统使用的所有  shell:  cat/etc/shell
+	显示当前使用的shell:    echo $SHELL
+	内部命令的帮助文档：    help
+	
+		
+		定义别名   alias cdnet="cd /etc/sys...."  设置好，我们可以之间使用 cdnet （别名）
+		查看别名   alias 		
+		取消别名   unalias cdnet
+		（定义别名写在硬盘中，在/root） 里有 .bashrc 这个文件 改这个文件
+		
+		清空屏幕上的信息    clear
+		可以让命令多行写    \
+		取消和结束命令执行  Ctrl+c Ctrl+d 
+	
+	日期和时间：
+		查看当前时间      date
+		显示年月日时分秒  date  "+%Y-%m-%d  %H:%M:%S" 
+		秒转换成天        date -d @1510111518  "+%Y-%m-%d  %H:%M:%S" 
+	简单命令：
+         	查看端口号        netstat -tnlp     
+		查看用户登录信息  who 
+		文件编辑          nano 文件名
+		列出块设备        lsblk   
+		创建文件          rpm -i  文件的路径
+		显示字符          echo     echo $PATH  查看环境变量
+		切换文件夹        cd
+		创建空文件        touch    
+		这个可以解析语法  ` `  等价于  $( ) 
+		列出目录          ls:
+		切换目录          cd  (改变目录)   cd .. 返回上级目录
+		显示目前的目录    pwd     pwd-P 显示真实的物理路径
+		创建一个新的目录  mkdir 
+		删除一个空的目录   dir   
+		复制文件或目录	  cp   使用 cp 源文件 目标文件
+		移除文件或目录    rm    rm -f 强制删除   rm  -r 删除目录 
+		移动或者重命名    mv   使用 mv 文件名 / 新的名字   mv 源路径 目标路径
+		在文件文件中查询指定的字符串    grep  字符串名字  文件名
+	文件类型：
+		d:目录文件     l:链接文件
+		b:块设备       c：字符设备文件
+		p:管道文件     -：普通文件
+	TAB 键：命令补全，  如果惟一：则直接补全，否则，再次给出列表 选项。
+		/ 2下 Tab键  显示所有根目录下一级目录，包括隐藏文件
+		~ 2下 Tab键  显示所有用户列表 
+		$ 2下 Tab键  显示所有变量
+	远程操作:
+		申请会话 sceen -s help (这个help是名字)
+		加入会话 sceen -x help  
+		退出会话 Ctrl + A 松手 按  D
+		关闭     exit
+
+	远程登录另一个Linux:ssh -l root 192.1...
+
+	使用帮助:
+		创建帮助文档数据库 7里：mandb  6里： whatis
+		查看命令是什么意思 whatis 命令名 
+		命令帮助 （查看怎么用）
+			内部命令 ：help 命令
+			外部命令 ：1 命令 -- help
+				     -- help  里 []表示可选项  <> 表示可变化的数据  X|Y|Z 表示 x或y或z  {} 表示分组
+				   2 man 章节 
+					1.用户命令   2.系统调用   3.C库调用  4.设备文件  5.配置文件格式  6.游戏  7.杂项  8.管理类的命令  9.Linux内核API
+   				     man 章节数字  命令  例子：man 1 date
+				   3 info 命令    s 搜索 u 退出链接 Enter进入链接
+		第三方应用官网文档：
+			http://www.nginx.org
+			http://tomcat.apache.org
+			http://httpd.apache.org
+			http://www.python.org
+	快捷键：
+		Ctrl + l 清屏 相当于 clear
+		Ctrl + c 终止命令
+		Ctrl + D 退出，等价于 exit
+		Ctrl + z 挂起命令
+		Alt  + r 删除整行 
+ 	
+	文件系统：
+		bin  用户二进制文件     boot 引导加载程序文件 
+	 	dev  设备文件           etc 配置文件  
+		lib  系统库             opt  可选的附加应用程序
+		mnt  挂载目录           sbin 系统二进制文件  		
+		srv  服务数据           tmp 临时文件
+		usr  用户程序           var 变量文件
+		
+	文件通配符：
+		*     匹配零个或多个字符    ~    当前用户家目录	
+		？    匹配任何单个字符      ~+   当前工作目录
+		[0-9] 匹配数字范围  	    [a-z] 字母
+
+ 	用户管理：
+		登录 root  用户 su root 
+		添加用户     useradd  用户名    passwd  设置密码
+		删除用户 -r  userdel  用户名    然后删除 home/ 下得文件夹 
+		切换用户    su      - 用户名
+
+	用户权限： rwx 读写执行
+		7 的 二进制  111
+		5 的 二进制  101
+		r w x   r w x   r w x
+		1 1 1   1 0 1   1 0 1
+		  7       5       5
+	
+  	        修改权限 chmod 755 文件名
+			 chmwn ：可以改变文件（目录）的属主 
+			 chown 用户名：组名  文件名   把该文件的属主 还有 属组改为 该用户名 ，该组名
+			 sudo chown -R apache /var/www/html/drupal8
+	管道：
+		分页显示： ls -R1 /etc     | more
+			  	 |  grep  搜索的关键字
+
+       防火墙：
+		查看状态：systemctl status firewalld
+		开启：systemctl start firewalld
+		关闭：systemctl stop firewalld
+		开机自动关闭：systemctl disable firewalld.service
+		开机自动开启：systemctl enable firewalld.service
+	
+       开关机: 
+		关机：init 0   poweroff   shutdown 10 定时关机
+		重启：reboot
+
+       文件管理：
+		创建文件：     touch  文件名   或者   vim  文件名
+		创建目录:      mkdir  目录名   例子:mkdir  -p /tep/a/b/c   当没有a,b两个目录下，创建c 需要加 -p
+		删除文件\目录 :rm	rm -rf  强制删除  -r 删除目录  -f 强制
+		复制文件       cp 源文件目录  目标目录		
+		查看文件       cat 文件名
+			       以分页形式出现  more 文件名   回车刷新一行  空格 刷新一屏  q 退出
+				more  文件名
+				按「ctrl」+「b」：屏幕往“后”移动一页。 
+　　				按「ctrl」+「f」：屏幕往“前”移动一页。 
+　　				按「ctrl」+「u」：屏幕往“后”移动半页。 
+　　				按「ctrl」+「d」：屏幕往“前”移动半页。 
+				「dd」：删除光标所在行。
+				less 文件名 （支持上下翻页）pagedown键 下翻 pageup键 上翻 ...
+		移动文件       mv 源路径 目标路径
+		xfs文件系统备份
+ 
+  	vim :   vim 是 vi的增强版
+		查看当前文件是谁装的  rpm -qf `which vim`
+		
+		a i o 进入编辑模式
+		：进入命令行模式
+		ctrl + v 进入可视块模式
+		
+		命令行模式：
+		:w  保存      :w!  强制保存
+		:q  退出      :q!  不保存，强制退出
+		:wq 保存退出  :wq! 强制保存退出 
+		:x  保存退出
+		： q q!  w  esc 
+		i  当前字符之前插入    I 行首插入
+		a  当前字符之后插入    A 行尾插入
+		o  下一行插入          O 上一行插入
+		x  向后删除一个字符    X  向前删除一个字符
+		u  撤销一步 按一次撤销一次
+		ctrl + r 还原撤销过的操作
+		r  替换
+
+		光标快速定位: hjkl 左下上右
+		0 和 home键 表示切换到行首
+		$ 和 end键  表示切换到行尾
+		gg 快速定位到文档的首行   G 定位到末行
+		查找关键字： / 字符串   n N 向上向下   取消搜索  ：noh
+
+		yy 复制  dd 删除（剪切）  P 粘贴
+
+		多行注释: 进入V模式 移动光标
+			Ctrl + v 进入列编辑模式   向下移动光标
+			然后按大写的I
+			再插入注释服   例如：‘#’
+			再按Esc ,就会全部注释
+		
+		设置行号：   :set nu     取消行号：   :set nonu
+		取消高亮     :noh
+
+		vim 打开多个文件   vim  -O /etc/a  /etc/b    
+			ctrl + ww 切换文件
+			:qa       退出    :qa!  
+
+
+
+	cento7.4下 windows上传Linux下打开乱码的解决方案
+		iconv -f gb2312 -t utf-8 -o  此文件
+
+	cento7.4下 解决Linux上导入wundows上的串行问题   原因：处理回车方法不同
+		rpm -ivh /mnt/Packages/dos2unix-6.0.3-7.el7.x86_64.rpm   安装
+		unix2dos b
+		sz b
+	
+	软件包的管理与安装:
+		安装rpm 软件 ： rpm [参数]  软件包
+		参数：-i   是install的意思  安装
+		      -v   显示附加信息，提供更多详细信息
+		      -V   校验，对已经安装的软件进行校验
+		      -h   --hash  安装时输出###标记 
+		ls /var/lib/rpm  查找rpm 包
+		rpm 的查询功能   rpm -qa   查询已经安装的软件包名
+				 rpm -pqi  包的绝对路径    查询包的详细信息
+				 rpm -V 报名  校严包是否被修改
+		卸载rpm   rpm -e 包名
+		二进制包（rpm）
+			rpm -qf 文件路径   （查询指定文件属于哪个包） 
+
+		yum的使用：
+			配置yum源   挂载镜像   mount  /dev/cdrom /mnt/ ^c
+			cd /etc/yum.repos.d
+			wget 下载
+			网络yun源：  wget -O 文件路径  -O 把下载的文件存到另一个文件中   wget  下载
+
+			yun操作
+			yun  install -y httpd  安装软件包
+			yun  update 包名 报名升级
+			yun  info  httpd       查询 rpm 包作用
+			yum  provides /user/bin/find    查看命令是哪个软件包安装的
+			yum  -y remove  包名   卸载包
+			yum  search 名  按关键字搜索软件包  查看要安装的包有没有
+  
+
+		tar命令：打包、压缩
+				-c         创建文件
+			        -x         解压还原文件
+				-f 文件名  指定备份文件    
+				-C  -- 位置  指定解压位置
+				例子： tar -cvf grub.tar /boot/grub  (给/boot/grub 目录，打包 )
+				       tar -xvf grub.tar.bz2 -C /opt/ (路径)
+				解压缩
+				tar -jxvf etc.tar.bz2 -C  路径
+				tar -zxvf etc.tar.gz   解压缩
+				打包 该文件下 所有文件
+				tar czvf test.tar.gz *
+
+		将本机文件复制到远程服务器上：scp  drupal8.tat root@192.168.100.106:/var/www/html
+		将远程服务器上的文件复制到本机
+				scp remote@www.abc.com:/usr/local/sin.sh /home/administrator
+				remote               通过remote用户登录到远程服务器（也可以使用其他拥有同等权限的用户）
+				www.abc.com          远程服务器的域名（当然也可以使用该服务器ip地址）
+				/usr/local/sin.sh    欲复制到本机的位于远程服务器上的文件
+				/home/administrator  将远程文件复制到本地的绝对路径
+
+	service指令 （控制软件的服务启动/停止/重启）
+		service  服务名  start/stop/restart
+		例如：启动Apache ：service  httpd start
+		ps -ef|grep httpd   查看Apache 是否启动成功
+		
+	killall (杀死进程)：
+		killall 进程名称
+
+	ssh协议:是一种协议，它的端口是22，我们可以使用终端去连接Linux,这个终端协议就是ssh协议。
+		解压压缩包: gz  格式文件：tar-zxvf 需要解压的文件
+			    bz2 格式文件：tar-jxvf 需要解压的文件
+
+		搭建Lamp  
+			安装zlib压缩库  
+				cd  /root/data
+				tar  -zxvf zlib-1.2.5 tar.gz
+				cd zlib-1.2.5
+				./configure       (对当前的程序安装进行配置)
+				make  && make install   编译  安装
+
+			安装apache
+				查看是否有安装过，安装过要卸载，重新安装
+				rpm -qa httpd     rem -e  文件名  --nodeps （卸载）  
+
+				cd /root/data
+				tar -jxvf httpd-2.2.19.tar.bz2
+				cd httpd-2.2.19
+				./configure    --prefix=/usr/local/http2   --enable-modules=all  -enable-mods-shared=all  --sysconfdir=/etc/httpd  -enable-so  
+				  (--prefix:指定软件的安装目录  --enable-modules：指定加载模块  -enable-mods-shared：表示以静态供享方式进行安装   )
+				   --sysconfdir：指定软件的配置文件的存放位置
+				make  && make install   编译  安装
+				然后修改apache配置文件  vim +148  /etc/httpd/httpd.conf  (在148行左右，讲ServerName前的#注释去掉)
+				然后启动 、停止、重启apache    start  stop  restart
+				service httpd restart
+				/usr/local/http2/bin/ apachectl start  
+				
+			安装libxml2:
+				cd /root/data
+				tar -zxvf libxml2-2.7.2 tar.gz    
+				cd libxml2-2.7.2
+				./configure   --prefix=/usr/local/libxml2  -without-zlib
+				make  && make install   编译  安装
+				(如果安装出错，需要删除两个目录  一个通过tar 命令解压的目录  另一个使用--preifx指定的目录)
+			安装jpeg8:
+				cd /root/data
+				tar -zxvf jpegstc.v8b.tar.gz  
+				cd jpeg-8b
+				./configure   --prefix=/usr/local/jpeg  --enable-shared --enable-static
+
+
+	安装MySQL:
+		yum install  mysql-server
+		MySQL 初始化：
+			service mysqld start       启动mysql
+			netstat -tnlp              查看端口号
+			mysql_se
+			mysql_secure_installation  初始化
+			输入、设置密码后 
+				出现几个英文 Remove anonymous users?  是否移除匿名用户
+					     Remive  test database and access to it  是否移除测试数据库
+					     Erload privilege tables now？ 是否重新加载权限表  Y
+			MySQL的启动控制  (启动/停止/重启)
+				service  mysqld  start/stop/restart	
+			进去mysql的方式：
+			 	mysql -u 用户名 -p 密码
+			退出：  exit
+
+		MariaDB:
+			yum install mariadb-server mariadb 
+			MariaDB 数据库安装完成，启动数据库的守护进程，同时使它能够在下次启动后自动启动。
+			systemctl start mariadb 
+			systemctl enable mariadb
+
+			mysql_secure_installation
+			在enter current password for root处直接回车
+			在Set root password？处点y回车，设置数据库密码
+			之后在每次需要输入的时候输入y表示同意
+
+		默认目录/文件位置
+			数据库存储目录： /var/lib/mysql
+			配置文件：       /etc/my.cnf
+			
+		备份：（数据库） 在Linux系统环境下  导出
+			全部备份（数据-结构）#  mysqldump -u root -p 密码 -A   > 备份文件路径
+			指定数据库    ..     #  mysqldump -u root -p 密码 库名 > 备份文件路径
+			多个库备份    ..     #  mysqldump -u root -p 密码 --databases db1 db2 > 备份文件路径
+
+			例子：mysqldump -u root -p 密码 -A   > /root/sql_201804061609.sql
+
+		还原：（数据库）导入 
+			方法1：mysql 命令行 source 方法 source 方法
+				mysql 命令下执行  source  备份文件路径
+			方法2：Linux命令下:
+				mysql -u root -p 密码 > 备份文件路径
+			例子：source /root/text_200.sql
+			
+		如果让 mysql远程登录：
+			1. 先进入数据库 选择mysql数据库：
+			2. 执行sql语句：select host,user  from user;
+			   (将其中一个用户表中的 host值改为“%”， % 表示可以允许任何地方登录)
+			3. update  user set host = '%' where host = '系统中名字的值' ；
+			4. 然后 刷新权限表  或者 重启 mysql
+				刷新权限表： flush  privileges;
+	编译安装与卸载（Nginx）:
+		1.下载nginx  网站:http://nginx.org/en/download.html
+		  使用在服务器下载的方式进行下载:  wget 地址
+		  例如: wget  http://nginx.org/download/nginx-1.13.11.tar.gz  (默认下载到当前目录下)
+		2.解压nginx  安装包
+		  tar -zxvf nginx-1.13.11.tar.gz
+		3.进入nginx  安装包
+		  cd nginx-1.13.11
+		  ls
+	        4.开始进行配置、编译、安装操作  (先安装PCRE库 和 zlib库 )
+		  在配置时报错:没有PCRE库 
+		 	安装PCRE库：yun  install pcre-devel
+		  在配置时报错:没有zlib库 			
+		 	安装zlib库：yun  install zlib-deve
+			还需要自己去下载 zlib的源码包
+			找到 zlib-1.2.11  这个压缩包
+
+		   ./configure --prefix=/usr/local/...指定安装路径  --with-pcre  -with-zlib=/user/local/src/zlib-1.2.11
+		   开始安装 make 
+		   make install
+		5.运行nginx  sbin/nginx 是启动命令
+		  启动nginx：/usr/local/nginx/sbin/nginx
+			     /opt/nginx/sbin/nginx
+		  停止nginx  usr/local/nginx/ sbin/nginx-s reload
+		6.卸载编译安装的软件
+		  rm -rf 软件的安装目录  注意:卸载必须停止软件的运行
+	
+	LAMP 架构:
+		安装PHP 和 apache :
+			1.yum install php	
+			   安装php会自动安装apache  启动apache ：service httpd start
+			2.修改apache  的配置文件：
+			   在 /etc/httpd/conf/httpd.conf  这个是apache 的配置文件  默认的。
+			   vim /etc/httpd/conf/httpd.conf
+			   搜索 ServerName     大概在276行 把ServerName www.example.com:80注释打开
+			   / 搜索   ：x 保存退出  重启apache  
+			3.测试php 是否安装成功：
+			    /var/www/html 目录下 创建index.php文件
+				<?php  phpinfo();  >
+		安装MySQL:
+			1.安装  ：yum install mysql-server
+			2.初始化：
+				service mysqld start      启动
+				mysql_secure_installation 初始化 
+				按下 回车 输入密码	y y n y 
+			3.进入mysql:  mysql -u root -p
+			  如果让 mysql远程登录：
+				1. 先进入数据库 选择mysql数据库：
+				2. 执行sql语句：select host,user  from user;
+				   (将其中一个用户表中的 host值改为“%”， % 表示可以允许任何地方登录)
+				3. update  user set host = '%' where host = '127.0.0.1' ；
+				4. 然后 刷新权限表  或者 重启 mysql
+				    刷新权限表： flush  privileges;		
+			4.阿里云上的安全端口放行。
+		网站上传：
+			修改文件的权限 ：chmod 777 -R /var/www/html     文件路径
+			yun install php-mysqli 安装php的扩展
+			重启apache ：service mysqld  restart
+			论坛：Discuz
+	
+	安装：apache 
+		yum install httpd httpd-devel  安装  y
+		systemctl start  httpd         启动  
+  		systemctl enable  httpd        设置httpd服务开机启动
+			
+
+	shell语言：
+		使用流程：1.创建  文件名.sh 文件  （.sh 是linux下bash shell 的默认后缀）
+			  2.编写shell 代码
+			  3.执行shell 脚本  (注意：脚本必须有权限)
+			  例子: 创建 test.sh ,实现shell脚本程序，输入hello world
+				创建 ：     touch/vim  进行创建文件
+				编写代码 ： #！/bin/bash
+				            echo 'hello world'
+				保存文件
+				执行文件：  ./test.sh    
+					    注意：这里运行一定要写 ./文件   如果不写，Linux系统会去 PATH(环境变量)里寻找有没有该文件。
+			  如果没有权限，使用 chmod 755 test.sh  进行修改权限 ，拥有可执行的权限
+
+	在mysql系统外，使用mysqladmin
+		mysqladmin -u root -p password "test123"
+		Enter password: 【输入原来的密码】
+
+	1、导出数据和表结构：
+		mysqldump -u用户名 -p密码 数据库名 > 数据库名.sql
+		mysqldump -uroot -p dbname > dbname .sql
+
+	部署Java:
+
+		查进程编号  ps -ef | grep cb_work_server
+		杀进程      kill -9  进程编号
+
+		启动路径    /home/bank/cb_work_server/bin
+		启动命令    ./startup.sh
+		查看日志    tail -f catalina.out
+        ctrl + c 退出面板
+	
+	查看当前系统的大小    df -h
+
+	查看当前路径内存大小  du -sh  
+			      du -lh
+	查看历史记录：history
+
+  	Linux下Mysql设置外网可以访问
+		1：设置mysql的配置文件
+    			/etc/mysql/my.cnf 或 /etc/my.cnf
+    			找到 bind-address  =127.0.0.1  将其注释掉；//作用是使得不再只允许本地访问；
+    			重启mysql：/etc/init.d/mysql restart; 或  sudo service mysql restart;
+		2：修改账户允许访问的地址
+			登录mysql数据库：mysql -u root -p  输入密码
+			mysql> use mysql;
+			mysql> select user,host from user;
+			如果没有"%"这个host值,就执行下面这两句:
+			mysql> update user set host='%' where user='root';
+			mysql> flush privileges;
+
+	查看 mysql 启动 状态：service mysqld status 
+	启动mysql  service mysql start
+	停止       service mysql stop
+		   systemctl restart mysqld.service

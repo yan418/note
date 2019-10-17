@@ -1,0 +1,32 @@
+微信小程序
+	api：https://developers.weixin.qq.com/miniprogram/dev/api/
+
+	目录结构：
+		由三个文件组成，app.js   小程序逻辑
+				app.json 小程序公共设置   页面配置  一定要配置
+				app.wxss 公共样式表
+		里面的文件，文件名必须相同
+	样式：
+		尺寸单位：
+			rpx   相当于  px   1=0.5px  相当于
+	组件：
+		轮播图：有许多参数...
+			<swiper >
+   				<swiper-item><image src='../../images/banner1.jpg'></image></swiper-item>
+    				<swiper-item><image src='../../images/banner2.jpg'></image></swiper-item>
+  			</swiper>
+	基本标签:
+		view    相当于 div   视图容器
+		text    文本标签
+		image   图片，默认300px,225px
+		<block> 不会在页面中做任何渲染   
+	事件：
+		触发事件 <view bindtap="viewTap">click me</view>
+			  viewTap:function(event){  .... }
+
+   		跳转页面		
+			 wx.navigateTo({
+     				 url: '../new/new',  //路径
+   			 })
+			
+

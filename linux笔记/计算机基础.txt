@@ -1,0 +1,116 @@
+计算机基础
+	计算机的系统是由硬件和软件两大部分组成
+	硬件系统分为：1 主机  2 外部设备
+	软件系统分为：1 系统软件、2 应用软件
+	
+	硬件组成部分：体现结构
+		输入设备、输出设备、运算器、控制器、存储器。
+	* 摩尔定律：
+	   由英特尔 创始人提出，当价格不变时，集成电路可容纳的元器件的数目，每18-24月，便增加一倍。性能提升
+
+	bit 位 (比特)   byte （字节）
+	1024 =1k （千字节）
+	1024k=1m （兆）
+	1024m=1G （千兆）
+	1024G=1T （太字节）
+	1024T=1p （拍字节）
+	1024p=1e （艾字节） 往上 z / y
+
+	服务器：server ：是网络中为客户端提供服务的高性能的计算机。
+ 	服务器分为：WEB服务器、数据库服务器、邮件服务器、文件服务器、日志服务器、打印服务器、中间件服务器（toncat）...
+
+	CPU:中央处理器 集成（运算器、控制器）公司有：Intel、AMD、IBM
+		主频：（一秒内发生的同步脉冲数）单位：HZ ,主频越高，CPU的速度越快
+		外频：系统总线的工作频率，CPU与主板芯片 交换数据的工作时钟频率
+		倍频：指CPU外频与主频相差的倍数
+		关系：主频=外频X倍频
+		高速缓存：（告诉交换的存储器）CPU缓存分为一级缓存、二级缓存、三级缓存
+	主板：电脑插在主板上，主板一般为矩形电路板，上面安装计算机的主要电路系统。
+	内存：点断数据就会丢， 内存是介于CPU 和外部储存之间。 特点：存取速度快。
+	      计算机所有程序运行都是在内存中进行，内存的性能对计算机的影响大。
+	外存：硬盘，U盘，软盘，光盘， 断点后数据不会丢失
+	
+	*镜像为系统在出现多位错或内存物理故障时提供数据保护功能，以保证系统仍能正常的运行。
+	
+	硬盘：1 机械硬盘 2 固态硬盘
+		
+	操作系统：
+		OS:通用目的的软件程序
+		OS分类：
+			服务器：Windows Server、AIX、CentOS
+			桌面：Windows 10、Windows 7 、Mac OS
+			移动设备：Andriod、ios、YunOS
+	开发接口标准：
+		ABI:描述应用程序与OS之间的底层接口，允许编译好的代码在使用兼容ABI的系统中无需改动就能运行。
+		    应用程序二进制接口 描述了应用程序和操作系统之间。
+		API:定义源代码和库之间的接口，源代码可以在支持这个、API的任何系统中编译。
+
+	编程语言：
+		低级语言：机器语言：0、1
+		中语级言：C语言 （系统级应用、驱动程序）
+		高级语音：java、php、python...
+	服务器三大操作系统：
+		Windows、Linux、Unix 
+
+	Linux起源：官网：www.kernel.org   托瓦兹
+		Linux内核+GNU工作 如：CentOS
+		Linux分支参考网站：http://futurist.se/gldt
+		尽量使用偶数版本
+
+	获取发行版：CentOS
+			网址：https://wiki.centos.org/Download
+			国内的镜像：http://mirrors.aliyun.com
+			下载：index of/centos/7.4.1708/isos/x86_64/Ce ntOS-7-x86_64-Everything-1708.iso
+
+			检查是否下载的是完整版的：虚拟机设置/  CD/DVD 这个里 / 点击连接 浏览/ 选择所安装的iso压缩文件 / 设备状态：勾选已经连接
+						 然后，敲命令 shalsum /dev/sr0    跟官网 的哈希值 一样，就好。
+	
+	虚拟机：软件：VMware
+		秘钥:
+		AA510-2DF1Q-H882Q-XFPQE-Q30A0
+		ZY3TU-0PGD2-080ZQ-1GP59-WURTF
+		ZG34U-F2ZE1-H85PQ-A7WZZ-XC8A2
+		YA3JU-4DGD6-481NZ-MMQEZ-YPKDD
+		CG1N2-6TFD7-M8E6Q-47MXC-YK89A
+		CPU：默认  内存：1G以上  硬盘：200G 网卡：桥接/仅主机模式  光盘：挂载对应的版本的ISO文件
+		
+
+	主分区：引导系统，一般硬盘最多4个，可以直接放数据
+	扩展分区：最多一个，可没有，不能直接存放数据
+	逻辑分区：
+	
+	安装过程：
+	在 configure Network 里点击
+	ctrl+alt+F2 强行在Linux里敲命令	  ctrl+alt+F6 回到图形界面	
+	获取地址: ifconfig  ping ip地址 在Window里测试	
+		
+	在选择 时间里，把system clock uses UTC对钩去掉
+
+	然后设置管理员 root
+	
+	which type of in....?
+	选择最后一个，create custom layout
+
+	第一次启动，需要初始化 create User 填写信息
+
+
+	CentOS 7安装：
+	选择第一个安装
+	在SOFTWARE SELECTION 里 GNOME Desktop 带图形界面
+	在NETWORK & .. 里 Etheret 网络勾选，重新命名Host Name
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,512 @@
+js
+   分为三大类：浏览器控制类、DOM类、Web类。
+   js的基本数据类型：number 、 string 、boolean 、Array、 undefined 、null 、object。
+   boolean 布尔类型：true、false
+   查看是什么类型的 typeof();
+	分支语句： 
+		1. if(表达式){
+		  	条件
+		   }else(表达式){
+			条件
+		   }
+		2. switch(表达式){
+			case 结果1： 执行语句1 break ；
+			case 结果2： 执行语句2 break ；
+			default：    执行语句3
+		   }
+        循环：
+	    1.  while(i<200){
+		     语句；  i++；
+		}
+	    2.  do{
+		     语句；i++；	
+		}while(i<200)   
+	    3.  for(表达式1，表达式2，表达式3){
+		     语句；
+		}
+	    break 和 continue语句： （终止循环）
+		  break    终止循环，跳出代码块。
+		  continue 终止本轮循环，跳出，下一轮循环，整个循环不终止。
+	算数运算符： +  -  *  /  %  ++x  x++  --x  x--
+	比较运算符： >  <  == === !=  !==  <=  >=
+	布尔运算符： ！ &&  ||   
+        三目运算符:  表达式1 ？ 表达式2 ：表达式3；
+	转义字符  :  \n  换行符号
+		     \r  回车符号
+		     \'  单引号	
+		     \” 双引号	
+        字符串:
+              查看字符串长度        对象.length
+	      字符串连接            对象.concat(对象2)
+	      截取字符串            对象.substring(num1 , num2 )
+	      返回当前字符串的位置  对象.indexOf(' 要查找的字符串 ')       没有返回-1
+	      倒过来查找字符串的位置对象.lastIndexOf(' 要查找的字符串 ')  
+	      去掉字符串两端空格    对象.trim（）
+	      大小写转换            对象.toUpperCase（）  对象.toLowerCase（）
+	      返回指定字符串数组    对象.match（' 要查找的字符串 '） 没有返回null  返回是数组的形式。
+	      返回位置	            对象.search（' 要查找的字符串 '）没有返回-1  有返回结果下标
+	      替换字符串            对象.replace（‘字符串1’，‘字符串2’） 讲字符串1 替换成 字符串2
+				    高级替换：
+					  var str2 = str.replace(“字符串”,function(match,$1){
+						//match 表示匹配到的字符串
+					  }) 
+				    例子：
+					  var str  = '大家好，我叫%name%,我来自%address% ';
+					  var data ={ "name":"小米"，"address"："中国"}
+					  var str2 = str.replace(/%([a-zA-Z]+)%/g,function(match,$1){
+						console.log(match,$1);
+						return data[$1];
+					  }
+
+	      字符串切割   	    对象.split（‘切割的元素’） 得到一个数组 ，分割符号不同，得到结果不同。
+	     javascript中字符串提供了两个有关Base64编码的方法：		
+			btoa()：字符串或二进制值转为Base64编码	 btoa(字符串)	
+			atob()：Base64编码转为原来的编码	 atob(字符串)
+	 
+	数组：var arr = [item1,item2,item3];	
+		  数组的长度：     arr.length
+		  for in循环遍历数组：for(var index in Arr){ 
+					 console.log(Arr[index]);	
+				      }
+		  数组的 删除：delete arr[index];    delete命令在使用的时候，是根据数组下标来对指定数组的值进行删除的.
+		  数组的方法:
+			判断是否为数组     isArray   Array.isArray(arr);  是返回true，否返回false。
+			返回数组本身       valueOf   返回指定对象的原始值。
+ 			把数组转换成字符串 toString  arr.toString()；
+			在数组的末端添加一个或多个元素  push:    arr.push(arr2)；
+			删除数组最后一个元素            pop ：   arr.pop()；
+			将数组转换为字符串，  		join：	 arr.join('要切割的内容')   默认按逗号隔开 ，切割数组。
+			在数组头部删除一个元素          shift:   arr.shift()  
+			在数组头部添加一个元素          unshift：arr.unshift(arr2)
+			数组反转           arr.reverse()；  反序排列数组。
+			数组截取	   arr.slice(num1,num2);  截取不包括 下标是 num2那个值。
+			数组截取，可插入值 arr.splice(index,removeCount,addItem1,addItem2,…)
+					   arrs.splice(3,3,a,b,c);的含义是，从数组下标为3的元素开始，删除3个元素，然后把a,b,c插入到原数组当中。
+			数组排序           arr.sort();  arr.sort(sortby)    默认按照编码方式排序
+			检索索引   	   arr.indexOf(item,beginIndex)     第二个参数表示从第几个元素开始索引，没有索引到则返回-1 ，
+			从后向前检索索引   arr.lastIndexOf(item,beginIndex) 第二个参数表示从第几个元素开始索引，没有索引到则返回-1 ，
+		
+				
+
+	对象和函数：
+	     对象的创建：var obj1 = {};
+			 var obj2 = new Object();
+			 var obj3 = Object.create(null);
+		   读取：obj['键名']  或者 obj.键名
+		     写：obj.键名=值 
+		     获取对象所有属性 ：        Object.keys(对象名)  
+		     删除一个属性     ：        delete  对象.键名
+		     检查对象是否包含一个属性： '键名' in 对象
+		     for in 遍历对象：          for (var pro in obj){	
+							console.log(obj[pro]);		  
+					 	}
+	     函数：
+		函数的声明：
+			function命令：
+				function 函数名(函数参数1,函数参数2,..) {     函数体	}
+			函数表达式  ：
+				var 变量 =  function(参数1,参数2,…){  函数体  };
+			Function构造函数：
+				var 变量 = new Function();		
+		函数的调用：函数名();
+		函数的作用域：
+			全局变量(global variable)：在函数外部声明的变量，它可以在函数内部读取。		
+			局部变量(local variable)：在函数内部定义的变量，外部无法读取。
+		arguments对象：读取所有参数。var func = function(one) {	
+						console.log(arguments[0]);  // 1
+						console.log(arguments[1]);  // 2
+						console.log(arguments[2]);  // 3
+					     }	
+					     func(1, 2, 3);
+		eval函数：将字符串里的语句，执行。 eval('var num = 100;');
+		instanceof类型检测：判断一个变量是否某个对象的实例 var arr = new Array();	
+							           console.log(arr instanceof Array); //true
+		Math对象：
+			Math.PI   指的是 π  3.1415....
+			Math.E：常数e。	// 2.718281828459045
+			Math.round()  四舍五入    Math.round(0.1) // 0    Math.round(-1.6) // -2
+ 			Math.floor()  向下取整    Math.floor(3.9) // 3    Math.floor(-3.2) // -4 
+			Math.ceil()   向上取整    Mat h.ceil(3.2)  // 4    Math.ceil(-3.9)  // -3
+			Math.abs()    返回参数值的绝对值     Math.abs(-1) // 1
+			Math.max()    返回最大的参数	     Math.max(2, -1, 5) // 5	
+			Math.min()    返回最小的参数         Math.min(2, -1, 5) // -1
+			Math.pow()    返回以第一个参数为底数、第二个参数为幂的指数值    Math.pow(2, 3) // 8
+			Math.sqrt()   返回参数值的平方根。如果参数是一个负值，则返回NaN Math.sqrt(4)   // 2
+			数值对象.tofixed(数值)   保留几位小数
+			三角函数方法: Math.sin方法返回参数的正弦	
+				      Math.cos方法返回参数的余弦
+				      Math.tan方法返回参数的正切。	
+				      Math.asin方法返回参数的反正弦	
+				      Math.acos方法返回参数反余弦	 
+				      Math.atan方法返回参数反正切
+			Math.random() 返回0到1之间的一个伪随机数  一定小于1。		
+	
+		Date对象：var date = new Date(year, month, day, hours, minutes, seconds, ms)
+			日期运算：两个日期对象进行减法运算，返回的就是它们间隔的毫秒数。	
+				  两个日期对象进行加法运算，返回的就是连接后的两个字符串。
+			日期对象的get*系列方法：
+				getTime()：返回实例对象距离1970年1月1日00:00:00对应的毫秒数。
+				getDate()：返回实例对象对应每个月的几号（从1开始）。
+				getDay()： 返回星期几，星期日为0，星期一为1，以此类推。
+				getYear()：返回距离1900的年数。
+				getFullYear()：返回四位的年份。
+				getMonth()：返回月份（0表示1月，11表示12月）。
+				getHours()：返回小时（0-23）。
+				getMilliseconds()：返回毫秒（0-999）。
+				getMinutes()：     返回分钟（0-59）。
+				getSeconds()：     返回秒（0-59）。
+
+				new Date(1994-06-27) 能转成时间
+
+		函数的道岔：  可以改变函数的调用者。  改变this
+			call:  函数.call  (函数的调用者，函数参数1，函数参数2....)	
+			apply: 函数.apply:(函数的调用者，[函数参数1，函数参数2....])
+		闭包：就是将函数内部和函数外部连接起来的一座桥梁。
+		 function(){}();
+
+	DOM:
+	   返回当前文档的域名:     document.domain
+	   location:
+		返回完整的URL：    document.location.href 
+	   	返回当前遵守协议   document.location.protocol
+		返回当前页面域名+端口号：document.location.host 
+		返回当前页面域名： document.location.hostname
+		返回当前页面端口号，如果不存在则返回空：document.location.port
+		返回当前页面在服务器中路径：     document.location.pathname 
+		返回当当前页面URL中的查询字符串：document.location.search 
+		跳转到另一个网址： document.location.assign(‘http://www.google.com’)
+ 		改变当前页面的url:location.assign('传递一个url');		
+				  window.location = '传递一个url';		
+				  location.href = '传递一个url'; <常用>
+		重新加载当前显示的页面:  reload():  location.reload(false):
+	   title: 返回当前文档的标题，该属性是可写的。
+		document.title = '新标题';
+	   characterSet：返回渲染当前文档的字符集，比如UTF-8、ISO-8859-1。
+		document.characterSet
+	   readyState：返回当前文档的状态。  document.readyState。
+		三种可能值：加载HTML代码阶段（尚未完成解析）是“loading”，	
+			    加载外部资源阶段是“interactive”，	
+			    全部加载完成是“complete”。
+	   anchors,forms,images,links,scripts：返回文档内部特定元素的集合。
+		document.obj
+
+	   Document节点操作页面元素:
+		querySelector(): 返回匹配指定的CSS选择器的元素节点
+			document.querySelector(".lianJie");
+		其他选择元素方式:
+			getElementById()  返回匹配指定ID属性的元素节点 
+			getElementsByTagName()  返回所有指定标签的元素 
+			getElementsByClassName()返回符合指定类名的所有元素 
+			getElementsByName()     用于选择拥有name属性的HTML元素
+		创建页面元素节点、属性:
+			document.createElement("标签名");  生成html元素节点
+		生成文本节点:
+			document.createTextNode(“这是p的文本节点内容”);
+		添加，父级里填写子元素:
+			父级对象.appendChild（子集对象）
+		生成一个新的属性对象节点，并返回它:
+			 document.createAttribute("style");
+		操作页面元素属性：
+			对象.getAttribute('属性名');	         //获取	     
+ 			对象.setAttribute('属性名','属性值');	 //创建	   
+ 			对象.removeAttribute('属性名');		 //删除
+		元素节点的style属性：
+			对象.style
+			setProperty(propertyName,value)：设置某个CSS属性。	
+			getPropertyValue(propertyName)： 读取某个CSS属性。	
+			removeProperty(propertyName)：   删除某个CSS属性。
+			例子：var divStyle = document.querySelector('div').style;	
+			      divStyle.setProperty('background-color','red');	
+			      divStyle.getPropertyValue('background-color');	
+			      divStyle.removeProperty(‘background-color’);
+		Node的属性:
+			ownerDocument:   返回当前节点所在文档的document节点。
+			nextSibling:     返回紧跟在当前节点后面的第一个同级节点。
+			previousSibling：返回当前节点前面的第一个同级节点。
+			parentNode：     返回当前节点的父节点。
+			parentElement:   返回当前节点的父元素节点。
+			textContent：    返回当前节点和它的所有后代节点的文本内容。		
+			nodeValue：      返回或设置当前点的值，格式为字符串。
+			childNodes：     返回一个节点集合。
+			firstChild：	 返回当前节点的第一个子节点。
+		Node的方法：
+			appendChild()   方法接受一个节点对象作为参数，将其作为最后一个子节点，插入当前节点,  （给一个节点填写一个子节点）。
+			hasChildNodes() 方法返回一个布尔值，表示当前节点是否有子节点。 (判断子节点是否存在，有true,没有false)  对象.hasChildNodes()；
+			cloneNode()     方法用于克隆一个节点。接受一个布尔值作为参数，表示是否同时克隆子节点。默认是false，  例子：购物车
+			insertBefore（）用于将某个节点插入当前节点的指定位置。接受两个参数，第一个参数是所要插入的节点，第二个参数是当前节点的一个子节点.
+					ul.insertBefore(li,ul.firstChild);  把li 插入 ul下第一个元素前面。
+			removeChild（） 接受一个子节点作为参数，用于从当前节点移除该节点。 divA.parentNode.removeChild(divA);
+			replaceChild()  表示将原节点中某个旧节点，替换新节点。例子：点赞   divA.parentNode.replaceChild(newSpan,divA);
+			contains（）	用来判断当前节点是否包含参数节点，包含返回true,否则：false	 p.contains(span);
+				        判断【参数节点】是否为【当前节点】的子节点。
+			isEqualNode()   检查两个节点是否相等。
+					所谓相等的节点，指的是两个节点的类型相同、属性相同、子节点相同。 u2.isEqualNode(u3)
+
+		HTML元素：
+			document.documentElement就指向这个元素。
+			视图窗口大小：clientWidth：	document.documentElement.clientWidth  （实际窗口的大小）
+				      clientHeight：	document.documentElement.clientWidth  （页面的大小）
+			包括了滚动条的视图窗口:         window.innerWidth     		      （实际窗口的大小，包含滚动条）
+						        window.innerHeight
+			html元素大小: offsetWidth:	document.documentElement.offsetWidth:	
+				      offsetHeight:
+			元素位置相关属性：
+				offsetParent：获取距离【当前元素】的最靠近的父元素。
+				offsetTop：   当前HTML元素左上角相对于offsetParent的垂直位移。
+				offsetLeft：  当前HTML元素左上角相对于offsetParent的水平位移。
+			获取元素对象的方法：
+				querySelector方法	querySelectorAll方法	getElementsByTagName方法	getElementsByClassName方法
+			元素属性的相关方法：
+				hasAttribute() 方法用来检测元素是否具有某些属性。返回布尔值。
+				getAttribute() 方法用来获取指定元素属性名的属性值。
+				setAttribute() 方法添加指定的属性，并为其赋指定的值。
+				removeAttribute()方法删除指定的属性。
+		事件：
+			语法：on+事件=‘函数();函数();函数();……
+			语法：元素.on+事件名  = function(){需要执行的语句;}
+			语法：元素.addEventListener(type,listener,useCapture)
+				type:事件类型。【没有on！没有on！没有on！】 		
+				listener:监听函数，绑定的函数		
+				useCapture:是否使用捕获机制。如果不写，默认值为false  false:冒泡机制  true：捕获机制
+			HTML事件的移除方式：元素.setAttribute('on+事件名'，null);
+					    元素. on+事件名=null;
+					    元素.removeEventListener(type,外部函数名,true)
+					    匿名函数 无法 删除
+					    IE下DOM2级事件的移除方式：元素.detachEvent(type,listener)
+
+			鼠标事件：鼠标单击是触发：click 
+				  鼠标双击是触发：dblclick
+				  鼠标按下时触发：mousedown 
+				  鼠标抬起时触发：mouseup
+				  鼠标移动时触发：mousemove (冒泡)
+ 				  鼠标移出时触发：mouseout  (冒泡)
+				  鼠标移入时触发(不冒泡)： mouseenter
+				  鼠标移出时触发(不冒泡)： mouseleave 
+
+			文档事件：
+				加载成功\失败事件：      load\error    例子：window.onload = func(){};
+   				当DOM加载完成时触发事件：DOMContentLoaded
+					DOM文档加载的步骤为：
+						解析HTML结构。
+						加载外部脚本和样式表文件。
+						解析并执行脚本代码。
+						DOM树构建完成。	//DOMContentLoaded执行
+						加载图片等外部文件。
+						页面加载完毕。	//load执行				
+				页面(文档)发生卸载时触发的事件：beforeunload  （页面刷新和关闭页面），
+				文档加载状态判断事件：readystatechange
+				档大小发生改变时的回调事件：resize
+			event事件：
+				type 属性：获得【当前触发事件】的类型， event.type
+				bubbles 属性：获得【当前触发事件的类型】是否冒泡 返回布尔值， event.bubbles
+				eventPhase 属性：事件传导至【当前节点】时处于什么的状态。
+				target 属性：返回事件真正的触发者
+				currentTarget 属性：返回事件的监听者
+				stopPropagation() 方法：用来阻止事件从当前节点传播到下一个节点。
+				event.target  获取事件真正的触发者
+
+				失去焦点事件 blur  ：.addEventListener('blur ',...);
+				获得焦点事件 focus : .addEventListener('focus',...);
+				滚动事件     scroll  window.onscroll = function () { }
+					     文档发生滚动时:IE：document.documentElement.scrollTop\Left     	
+							    非IE：document.body.scrollTop\Left
+
+
+				键盘事件:
+					keydown: 用户按下任意键都可以触发这个事件。
+					keypress:用户按下任意键都可以触发这个事件(功能键除外)。
+					keyup:   用户释放按键时触发。
+					键盘事件中提供的属性：event.keyCode
+						 常见的按键编码【回车：13】【backspace：8】
+
+				手机触摸事件：
+					touchstart： 当手指触摸屏幕时触发。  div.addEventListener('touchstart',function () {});
+					touchmove：  当手指在屏幕上滑动时连续的触发。
+					touchend：   当手指从屏幕上移开时触发。
+					touchcancel：当系统停止跟踪触摸时触发。（如电话接入或者弹出信息）
+					touches 触摸对象 属性:
+						      clientX:   触摸目标在视口中的X坐标。
+						      clientY:   触摸目标在视口中的Y坐标。		
+						      identifier：表示触摸的唯一ID。
+            					      pageX：    触摸目标在页面中的x坐标。
+				         	      pageY：    触摸目标在页面中的y坐标。
+						      screenX:   触摸目标在屏幕中的x坐标。
+						      screenY:   触摸目标在屏幕中的y坐标。
+					 	      target:    触摸的DOM节点坐标
+
+			
+			this对象：this代表【函数运行时】【自动生成的】一个【用来指代函数调用者】的对象，this只能在函数内部使用。
+				  HTML 级事件：this指向window	
+				  DOM0级事件： this指向绑定事件的这个元素	
+ 				  DOM2级事件： this指向绑定事件的这个元素  （非IE）  
+    		      		               this指向window              （IE）
+			关于select的知识点：
+				  创建option:  var option = new Option(‘对象’)；
+				  添加option:  select.option.add(‘对象’)；
+				  清空option:  select.option.length = 0;
+				  获取正在选中的option:  select.selectedIndex
+				  触发option:  select.onchange = function(){ };
+
+	BOM: (浏览器对象模型)
+		window对象:打开窗口 window.open(url);  【等价于open(url);】
+  			   关闭窗口 window.close();    【等价于close();】			
+			   获取事件 window.event       【等价于event;】		
+			   获取文档 window.document    【等价于document】
+		window对象中常用的属性和方法:
+			window尺寸属性：
+				返回的是整个浏览器的高度：
+					window.outerHeight	window.outerWidth
+				返回视口的宽高 (计算滚动条的高度)：
+					window.innerHeight	window.innerWidth
+				返回视口的宽高(不计算滚动条的高度)
+					document.documentElement.clientHeight
+					document.documentElement.clientWidth
+				返回页面滚动的距离(通用)
+					window.pageYOffset      window.pageXOffset
+				返回浏览器距离屏幕的距离
+					window.screenX          window.screenY
+			window.history对象：
+				window.history.back()     跳转到上一个页面
+				window.history.forward()  跳转到下一个页面
+				window.history.go(num)    跳转到指定页面
+				window.history.length     页面的数量
+			window.navigator对象属性：
+				navigator.appCodeName    //浏览器代码名的字符串表示 	
+				navigator.appName 	 //官方浏览器名的字符串表示 
+				navigator.appVersion 	 //浏览器版本信息的字符串表示 
+ 				navigator.cookieEnabled  //如果启用cookie返回true，否则返回false 
+				navigator.javaEnabled()  //如果启用java返回true，否则返回false 
+				navigator.platform  	 //浏览器所在计算机平台的字符串表示 	
+				navigator.plugins  	 //安装在浏览器中的插件数组 	
+				navigator.userAgent      //返回和浏览器内核相关的信息
+		提示框：
+			alert   警示框，作用是提示用户信息，该方法执行后无返回值。
+			prompt  警示框，作用是提示用户信息  prompt(alertMsg,defaultMsg);	
+			confirm 警示框，作用是提示用户信息，点击确认返回true，点击取消返回false。
+
+		间隔调用：每个多久执行一次
+			var timer = setInterval(需要执行的函数，执行间隔时间ms)；
+			清除间隔调用：clearInterval(变量标识)。	
+		延迟调用：过多久再执行
+			var timer = setTimeout(需要执行的函数，等待的时间);
+
+		禁止图片拖动：ondragstart='return false;' 
+
+	数据解析：
+		var data ="?name=frank&age=18&sex=male";
+
+	页面优化：
+		<script src=“...” defer >   defer : 让这个外部脚本在dom加载完毕后，再加载。
+		<script src=“...” async >   async ：异步加载，
+		创建碎片：var a = document.createDocumentFragment();
+			  document.body.appendchild(a);
+			  一次性将碎片中内容添加页面上，只引发一次回流。
+	原型：
+		js中创建类的方法:
+			function 类名（公有属性值1，公有属性值2）｛
+				var 私有属性名   =	值，		
+				this.公有属性名1 = 公有属性值1，
+				this.公有属性名2 = 公有属性值2，
+			｝		
+			类名.prototype.公有属性名3= 值3
+			prototype：（相当于 继承 ）
+				它有两个默认属性:
+					1.  constructor 构造器，指明了原型归哪个类所有。
+					2.  _proto_     原型指向，提供给 类创建的对象  使用。
+				
+
+	正则表达式：（字符串检索模式）
+		语法：/正则表达式主体/修饰符(可选)
+		search方法：用于检索与正则表达式相匹配的子字符串，并返回子字符串的起始位置。
+		replace方法：用于在指定字符串中用一个字符串替换一个与正则表达式相匹配的子字符串。
+		表达式模式：
+			[abc]：在指定字符串中检索，查找任何满足【存在于方括号中】规则的字符或字符串。
+			[0-9]：在指定字符串中检索，查找任何满足【0至9之间】规则的的字符或字符串。
+			(x|y)：在指定字符串中检索，查找任何满足【以|分隔的选项之一】的字符或字符串。
+		元字符模式：
+			\d：在指定字符串中检索，查找任何【是数字】规则的字符或字符串。
+			\s: 在指定字符串中检索，查找任何【是空白】规则的字符或字符串
+			\b: 在指定字符串中检索，查找任何【是单词边界】规则的字符或字符串
+
+		量词模式：
+			n+：在原字符串中检索任何【包含一个或多个n】的子字符串。
+			n*：在原字符串中检索任何【包含0个或多个n】的子字符串。
+			n?: 在原字符串中检索任何包含0个或1个n的子字符串
+		RegExp对象：
+			语法：var regExp = new RegExp(正则表达式内容,修饰符);
+			test()方法：  用来判断在【指定字符串中】是否存在【满足正则表达式规则】的子字符串。存在就返回true，反之返回false。
+				语法：正则表达式.test(指定字符串)
+				例子: var regExp = new RegExp('abc','g');           
+				      console.log(regExp.test('12abc12abABC'));  //true
+			exec()方法:   用来查找在【指定字符串中】【第一个】【满足正则表达式规则】的子字符串出现的【下标和内容】。
+				语法：正则表达式.exec(指定字符串)
+				例子: var regExp = new RegExp('abc','gi');           
+				      var result = regExp.exec('12abc12abABC');           
+				      console.log(result);   //["abc", index: 2, input: "12abc12abABC"]
+
+			^初位字符：表示判断字符串以某个内容开始     
+			$末位字符：表示判断字符串以某个内容结束
+			subStr{n}: 想要检索的内容恰好出现n次	
+			subStr{n,}:想要检索的内容至少出现n次	
+			subStr{n,m}:想要检索的内容至少出现n次,至多出现m次
+	JSON: 数据交换格式
+		解析JSON :  JSON.parse(数据)     反序列化   JSON字符串 转换成  JSON对象
+		封装JSON :  JSON.stringify(数据) 序列号	    JSON对象   转换成  JSON字符串
+	
+
+
+	本地存储：
+		localStorage：
+			存储： localStorage.setItem(“键”,“值”)
+			读取： localStorage.getItem(“键”)
+			删除： localStorage.removeItem(“键”)
+		会话存储：(特点：在浏览器窗口打开的时候存储和读取数据，当浏览器窗口关闭就失效)
+		sessionStorage
+			存储： sessionStorage.setItem(“键”,“值”)
+			读取： sessionStorage.getItem(“键”)
+			删除： sessionStorage.removeItem(“键”)
+		封装的cookie：  引入js
+			设置： setCookis("键"，“值”，时间，“路径  / ”)
+			获取： getCookie("键");
+
+	
+        js  debugger 调试
+ 		F9 单步执行
+  		F11  遇到函数就进去
+  		F10  遇到函数不进去  走完函数作为一步
+  		Shift + F11  跳出函数，返回父级函数  
+
+	
+	java 的断点:
+		F5  向下走  进方法
+		F6 大走
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
